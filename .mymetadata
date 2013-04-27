@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SchemaExportDemo"
+  id="myeclipse.1366380548218"
+  context-root="/SchemaExportDemo"
+  j2ee-spec="5.0"
+  archive="SchemaExportDemo.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

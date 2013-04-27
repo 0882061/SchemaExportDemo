@@ -1,0 +1,13 @@
+<?xml version="1.0"  encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.ybase.domain">
+	<class name="Role" table="N_ROLE">
+		<cache usage="read-write" />
+		<id name="id" column="USER_ID" length="32" type="string">
+			<generator class="org.hibernate.id.UUIDGenerator"></generator>
+		</id>
+		<property name="name" column="USER_NAME" type="string" length="50" />
+		<property name="desc" column="USER_DESC"  type="clob" />
+	</class>
+</hibernate-mapping>

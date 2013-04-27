@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hibernate-build.xml" default="createDatabase"
+	basedir=".">
+	<property name="classes.dir" value="bin" />
+	<property name="lib.dir" value="../lib" />
+	<property name="src.dir" value="../src" />
+	<property name="conf.dir" value="../conf" />
+
+	<path id="lib.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="src.classpath">
+		<pathelement location="${src.dir}" />
+		<pathelement location="${conf.dir}" />
+	</path>
+
+	<path id="runtime.classpath">
+		<path refid="lib.classpath"></path>
+		<path refid="src.classpath"></path>
+	</path>
+
+	<target name="createBin">
+		<echo>创建bin目录</echo>
+		<mkdir dir="${classes.dir}" />
+	</target>
+
+	<target name="deleteBin">
+		<echo>删除bin目录</echo>
+		<delete dir="${classes.dir}" />
+	</target>
+
+	<target name="copyConf">
+		<echo>拷贝conf文件</echo>
+		<copy todir="${classes.dir}">
+			<fileset dir="${conf.dir}" />
+		</copy>
+	</target>
+
+	<target name="compile" depends="createBin">
+		<echo>编译Domain</echo>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}">
+			<classpath refid="runtime.classpath" />
+		</javac>
+		<antcall target="copyConf" />
+	</target>
+
+	<target name="createDatabase" depends="compile">
+		<echo>开始创建DB Schema</echo>
+		<taskdef name="schemaexport" classname="org.hibernate.tool.hbm2ddl.SchemaExportTask">
+			<classpath refid="runtime.classpath" />
+		</taskdef>
+		<schemaexport config="${classes.dir}/hibernate.cfg.xml"
+			quiet="false" text="true" delimiter=";" output="um_db_schema.sql">
+		</schemaexport>
+		<antcall target="deleteBin" />
+		<echo>创建DB Schema成功</echo>
+	</target>
+
+</project>
